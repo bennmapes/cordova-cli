@@ -178,7 +178,7 @@ module.exports.prototype = {
             var files = group.findall('Content');
             for (var j = 0, k = files.length; j < k; j++) {
                 var file = files[j];
-                if (file.attrib.Include.substr(0, 3) == 'www' && file.attrib.Include.indexOf('cordova.js') < 0) {
+                if (file.attrib.Include.substr(0, 3) == 'www') {
                     // remove file reference
                     group.remove(0, file);
                     // remove ItemGroup if empty
@@ -191,8 +191,7 @@ module.exports.prototype = {
         }
 
         // now add all www references back in from the root www folder
-        var project_root = util.isCordova(this.wp8_proj_dir);
-        var www_files = this.folder_contents('www', util.projectWww(project_root));
+        var www_files = this.folder_contents('www', path.join(this.wp8_proj_dir, 'www'));
         for(file in www_files) {
             var item = new et.Element('ItemGroup');
             var content = new et.Element('Content');
